@@ -1,0 +1,33 @@
+type TodoRequest {
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
+type TodoResponse {
+	Id int `json:"id"`
+}
+
+type QueryTodoRequest {
+	Id    string `form:"id"`
+	Pos   int    `form:"pos,optional"`
+	Limit int    `form:"limit,optional"`
+}
+
+type QueryTodoOneResponse {
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
+type (
+	QueryTodoResponse {
+		Data []QueryTodoOneResponse `json:"data"`
+	}
+)
+
+service todo-api {
+	@handler addTodo
+	post /todo(TodoRequest) returns (TodoResponse);
+	
+	@handler getTodo
+	get /todo(QueryTodoRequest) returns (QueryTodoResponse);
+}
