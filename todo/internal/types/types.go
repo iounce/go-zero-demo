@@ -11,7 +11,7 @@ type TodoResponse struct {
 }
 
 type QueryTodoRequest struct {
-	Id    string `form:"id"`
+	Id    string `form:"id,optional"`
 	Pos   int    `form:"pos,optional"`
 	Limit int    `form:"limit,optional"`
 }

@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"strconv"
 
 	"abc.com/todo/v1/internal/svc"
 	"abc.com/todo/v1/internal/types"
@@ -25,15 +24,20 @@ func NewGetTodoLogic(ctx context.Context, svcCtx *svc.ServiceContext) GetTodoLog
 }
 
 func (l *GetTodoLogic) GetTodo(req types.QueryTodoRequest) (*types.QueryTodoResponse, error) {
-	// todo: add your logic here and delete this line
+	result, err := l.svcCtx.TodoModel.Query(req.Pos, req.Limit)
+	if err != nil {
+		return nil, err
+	}
+
+	size := len(*result)
 
 	var rsp types.QueryTodoResponse
-	size := 2
+
 	rsp.Data = make([]types.QueryTodoOneResponse, size, size)
 
 	for i := 0; i < size; i++ {
-		rsp.Data[i].Title = "Title " + strconv.Itoa(i+1)
-		rsp.Data[i].Content = "Content " + strconv.Itoa(i+1)
+		rsp.Data[i].Title = (*result)[i].Title
+		rsp.Data[i].Content = (*result)[i].Content
 	}
 
 	return &rsp, nil

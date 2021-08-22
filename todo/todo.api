@@ -8,7 +8,7 @@ type TodoResponse {
 }
 
 type QueryTodoRequest {
-	Id    string `form:"id"`
+	Id    string `form:"id,optional"`
 	Pos   int    `form:"pos,optional"`
 	Limit int    `form:"limit,optional"`
 }
