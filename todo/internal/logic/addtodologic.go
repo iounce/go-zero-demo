@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"rpc/pushclient"
 
 	"abc.com/todo/v1/internal/svc"
 	"abc.com/todo/v1/internal/types"
@@ -37,6 +38,15 @@ func (l *AddTodoLogic) AddTodo(req types.TodoRequest) (*types.TodoResponse, erro
 	if err == nil {
 		id = int(lastId)
 	}
+
+	rpcReq := pushclient.MsgReq{Id: lastId, Title: req.Title, Content: req.Content}
+
+	rpcRsp, err := l.svcCtx.PushRpc.Subscribe(l.ctx, &rpcReq)
+	if err != nil {
+		println(err.Error())
+	}
+
+	println(rpcRsp.Code, rpcRsp.Msg)
 
 	return &types.TodoResponse{
 		Id: id,

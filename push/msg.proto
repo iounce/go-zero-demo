@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package push;
+
+message MsgReq{
+  int64 id = 1;
+  string title = 2;
+  string content = 3;
+}
+
+message MsgRsp{
+  int64 code = 1;
+  string msg = 2;
+}
+
+service push {
+  rpc subscribe(MsgReq) returns(MsgRsp);
+}

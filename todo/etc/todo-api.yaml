@@ -7,3 +7,8 @@ CacheRedis:
 - Host: 127.0.0.1:6379
   Pass: 
   Type: node
+PushRpc:
+    Etcd:
+      Hosts:
+        - 127.0.0.1:2379
+      Key: msg.rpc
